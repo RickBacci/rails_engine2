@@ -15,6 +15,9 @@ Rails.application.routes.draw do
         get "/#{category}/find",     to: "#{category}#find"
         get "/#{category}",          to: "#{category}#index"
       end
+
+
+      get '/merchants/:id/items',        to: 'merchants#items'
     end
   end
 end

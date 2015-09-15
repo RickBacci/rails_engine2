@@ -21,6 +21,10 @@ class Api::V1::MerchantsController < ApplicationController
     respond_with Merchant.all.sample
   end
 
+  def items
+   respond_with Merchant.find(params[:id]).items
+  end
+
   private
 
   def find_params
