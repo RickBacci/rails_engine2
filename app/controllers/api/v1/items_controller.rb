@@ -12,7 +12,7 @@ class Api::V1::ItemsController < ApplicationController
   def find
     respond_with Item.find_by(find_params)
   end
-  w
+
   def find_all
     respond_with Item.where(find_params)
   end
