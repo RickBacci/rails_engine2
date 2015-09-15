@@ -23,9 +23,9 @@ namespace :parser do
         model.create(row.to_hash)
       end
 
-      puts "#{model.all.size} #{model} records imported successfully"
+      puts "#{model.all.size} #{model} records imported successfully"\
+           " in #{Time.now - start_time} seconds."
     end
-    puts "Data parsed in #{Time.now - start_time} seconds."
   end
 end
 
