@@ -1,0 +1,8 @@
+Given(/^I'm a merchant with the following (\d+) items$/) do |arg1, table|
+  # table is a Cucumber::Ast::Table
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I request: GET \/api\/v(\d+)\/merchants\/(\d+)\/items$/) do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
