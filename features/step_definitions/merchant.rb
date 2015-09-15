@@ -1,9 +1,17 @@
-Given "I'm a merchant with no items" do
-  merchant = Merchant.new(name: 'testy')
-  expect(merchant.items).to eq([])
+Given "I'm a registered merchant with an id of $id" do |id|
+
+  @merchant = Merchant.new(id: id, name: 'testy')
+  @merchant.save!
+
+  expect(@merchant).to be_valid
 end
 
-When(/^I request: GET \/api\/v(\d+)\/merchants\/(\d+)\/items$/) do |arg1, arg2|
-
-  expect(response.body).to eq([])
+Given "I have no items" do
+  expect(@merchant.items).to eq([])
 end
+
+When "I request: GET /api/v1/merchants/$id/items" do
+  expect(response.status).to eq("200")
+  expect(response.body).to eq("")
+end
+
