@@ -119,4 +119,20 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(invoice.items.size).to eq(2)
     end
   end
+
+  describe "#customer" do
+    it 'returns customer for an invoice' do
+      customer = Customer.create!(first_name: 'joe')
+      invoice = Invoice.create!(status: 'shipped', customer_id: customer.id)
+
+      get :customer, id: invoice.id, format: :json
+
+      expect(response).to have_http_status(:success)
+
+      customer = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(customer[:first_name]).to eq('joe')
+    end
+  end
 end

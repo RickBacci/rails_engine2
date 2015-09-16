@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get '/invoices/:id/transactions',  to: 'invoices#transactions'
       get '/invoices/:id/invoice_items', to: 'invoices#invoice_items'
       get '/invoices/:id/items',         to: 'invoices#items'
+      get '/invoices/:id/customer',      to: 'invoices#customer'
     end
   end
 end
