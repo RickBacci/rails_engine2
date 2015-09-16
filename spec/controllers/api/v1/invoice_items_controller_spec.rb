@@ -87,5 +87,16 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
     end
   end
 
+  describe "#invoice" do
+    it 'has an associated invoice' do
+      invoice.invoice_items.create!(quantity: "2", unit_price: "2.00")
 
+      get :invoice, id: InvoiceItem.first.id, format: :json
+
+      invoice_item_invoice = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoice_item_invoice[:id]).to eq(invoice.id)
+    end
+  end
 end
