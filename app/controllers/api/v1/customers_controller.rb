@@ -25,8 +25,11 @@ class Api::V1::CustomersController < ApplicationController
     respond_with Customer.find(params[:id]).invoices
   end
 
-  private
+  def transactions
+    respond_with Customer.find(params[:id]).transactions
+  end
 
+  private
 
   def find_params
     params.permit(:id,

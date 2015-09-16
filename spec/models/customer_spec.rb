@@ -16,4 +16,22 @@ RSpec.describe Customer, type: :model do
       expect(customer.invoices.size).to eq(2)
     end
   end
+
+  context 'can have a collection of transactions' do
+
+    it 'that starts out empty' do
+      expect(customer.transactions).to eq([])
+    end
+
+    it 'that can be added to' do
+      customer.invoices.create!(status: "success")
+      invoice = customer.invoices.first
+
+      2.times do
+        invoice.transactions.create!(result: "success")
+      end
+
+      expect(customer.transactions.size).to eq(2)
+    end
+  end
 end

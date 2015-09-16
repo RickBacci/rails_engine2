@@ -90,4 +90,20 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     end
   end
 
+  describe "#transactions" do
+    it 'returns the customers transactions' do
+      customer = Customer.create(first_name: "customer1")
+      customer.invoices.create!(status: "success")
+      invoice = customer.invoices.first
+
+      2.times do
+        invoice.transactions.create!(result: "success")
+      end
+
+      get :transactions, id: customer.id, format: :json
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(2)
+    end
+  end
 end
