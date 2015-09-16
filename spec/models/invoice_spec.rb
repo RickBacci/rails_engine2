@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Invoice, type: :model do
   let(:customer) { Customer.create(first_name: 'joe') }
-  let(:invoice) { Invoice.create!(status: 'shipped', customer_id: customer.id) }
+  let(:merchant) { Merchant.create(name: 'acme') }
+
+  let(:invoice) { Invoice.create!(status: 'shipped',
+                                  customer_id: customer.id,
+                                  merchant_id: merchant.id) }
 
   it 'initially has no transactions' do
     expect(invoice.transactions).to eq([])
@@ -30,7 +34,10 @@ RSpec.describe Invoice, type: :model do
 
 
   it 'has a customer' do
-
     expect(invoice.customer.first_name).to eq('joe')
+  end
+
+  it 'has a merchant' do
+    expect(invoice.merchant.name).to eq('acme')
   end
 end
