@@ -78,9 +78,9 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
     it "returns invoice associated with the transaction" do
       invoice = Invoice.create!(status: 'shipped')
       invoice.transactions.create!(credit_card_number: "1234", result: "success")
-      transaction = invoice.transactions.first
+      transaction_invoice_id = invoice.transactions.last.id
 
-      get :invoice, id: transaction.id, format: :json
+      get :invoice, id: transaction_invoice_id, format: :json
 
       transaction_invoice = JSON.parse(response.body, symbolize_names: true)
 

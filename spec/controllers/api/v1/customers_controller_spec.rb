@@ -6,13 +6,14 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
     it "returns all customers" do
       2.times do |x|
-        Customer.create(first_name: "customer#{x}")
+        Customer.create!(first_name: "customer#{x}")
       end
 
       get :index, format: :json
+      customers = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq(2)
+      expect(customers.size).to eq(2)
     end
   end
 
@@ -24,12 +25,13 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       end
 
       duplicate_customers = 0
-
       40.times do
         get :random, format: :json
-        m1 = (JSON.parse(response.body)['id'])
+        first_name = JSON.parse(response.body, symbolize_names: true)
+        m1 = first_name
         get :random, format: :json
-        m2 = (JSON.parse(response.body)['id'])
+        first_name = JSON.parse(response.body, symbolize_names: true)
+        m2 = first_name
 
         duplicate_customers += 1 if m1 == m2
       end
@@ -44,20 +46,22 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       customer = Customer.create(first_name: "customer1")
 
       get :show, id: customer.id, format: :json
+      customer_body = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['first_name']).to eq('customer1')
+      expect(customer_body[:first_name]).to eq('customer1')
     end
   end
 
   describe "#find" do
     it "finds a single customer that matches a query param" do
-      customer = Customer.create(first_name: "customer1")
+      customer = Customer.create!(first_name: "customer1")
 
       get :find, id: customer.id, format: :json
+      customer = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['first_name']).to eq('customer1')
+      expect(customer[:first_name]).to eq('customer1')
     end
   end
 

@@ -19,9 +19,6 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 3.0'
-  gem 'cucumber-rails', :require => false
-  gem 'cucumber-api-steps', :require => false
-  gem 'json_spec'
   gem 'simplecov', :require => false
 end
 

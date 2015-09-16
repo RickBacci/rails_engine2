@@ -48,6 +48,8 @@ class Api::V1::InvoicesController < ApplicationController
     params.permit(:id,
                   :status,
                   :created_at,
-                  :updated_at)
+                  :updated_at,
+                  :customer_id,
+                  :merchant_id)
   end
 end

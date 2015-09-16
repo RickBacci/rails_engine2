@@ -1,5 +1,5 @@
 class Api::V1::TransactionsController < ApplicationController
-  respond_to :json
+ respond_to :json
 
   def index
     respond_with Transaction.all
@@ -32,6 +32,7 @@ class Api::V1::TransactionsController < ApplicationController
                   :credit_card_number,
                   :result,
                   :created_at,
-                  :updated_at)
+                  :updated_at,
+                  :invoice_id)
   end
 end

@@ -37,6 +37,7 @@ class Api::V1::ItemsController < ApplicationController
                   :description,
                   :unit_price,
                   :created_at,
-                  :updated_at)
+                  :updated_at,
+                  :merchant_id)
   end
 end
