@@ -104,4 +104,19 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(invoice.invoice_items.size).to eq(2)
     end
   end
+
+  describe "#items" do
+    it 'returns all items for an invoice' do
+      invoice = Invoice.create!(status: 'shipped')
+
+      2.times do |x|
+        invoice.items.create(name: "item#{x}", description: "item description#{x}")
+      end
+
+      get :items, id: invoice.id, format: :json
+
+      expect(response).to have_http_status(:success)
+      expect(invoice.items.size).to eq(2)
+    end
+  end
 end
