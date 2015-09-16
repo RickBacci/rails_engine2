@@ -23,7 +23,7 @@ RSpec.describe Merchant, type: :model do
     end
 
     it 'that can be added to' do
-      merchant.invoices.create!(name: 'item1', description: 'item1 description')
+      merchant.invoices.create!(status: 'shipped')
 
       expect(merchant.invoices.size).to eq(1)
     end
