@@ -122,12 +122,6 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq(1)
-
-      Invoice.last.transactions.create!(credit_card_number: '1234123412341234', result: 'success')
-
-      get :revenue, id: merchant.id, format: :json
-
-      expect(JSON.parse(response.body)['scope'].size).to eq(2)
     end
   end
 end
