@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       get '/item/:id/merchant',          to: 'items#merchant'
 
       get '/transactions/:id/invoice',   to: 'transactions#invoice'
+
+      get '/customers/:id/invoices',     to: 'customers#invoices'
     end
   end
 end
