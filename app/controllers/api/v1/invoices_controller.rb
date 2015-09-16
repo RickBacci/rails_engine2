@@ -21,6 +21,10 @@ class Api::V1::InvoicesController < ApplicationController
     respond_with Invoice.all.sample
   end
 
+  def transactions
+    respond_with Invoice.find(params[:id]).transactions
+  end
+
   private
 
   def find_params
