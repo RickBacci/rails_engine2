@@ -95,4 +95,19 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       expect(invoice_items.size).to eq(2)
     end
   end
+
+  describe "#merchant" do
+    it 'returns the merchant associated with this item' do
+      merchant = Merchant.create!(name: 'acme')
+      merchant.items.create!(name: 'item1')
+      item = Item.last
+
+      get :merchant, id: item.id, format: :json
+
+      merchant = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(merchant[:name]).to eq('acme')
+    end
+  end
 end
