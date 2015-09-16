@@ -64,9 +64,9 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   describe "#find_all" do
     it "returns all merchants with the same attribute" do
 
-        Merchant.create(name: "merchant1")
-        Merchant.create(name: "merchant1")
-        Merchant.create(name: "!merchant1")
+      Merchant.create(name: "merchant1")
+      Merchant.create(name: "merchant1")
+      Merchant.create(name: "!merchant1")
 
       get :find_all, name: 'merchant1', format: :json
 
@@ -104,6 +104,30 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq(2)
+    end
+  end
+
+  describe "#revenue" do
+    let(:merchant) { Merchant.create!(name: 'acme') }
+
+    it 'returns total revenue for merchant across all transactions' do
+      2.times do |x|
+        merchant.invoices.create!(status: 'pending')
+      end
+
+      Invoice.first.transactions.create!(credit_card_number: '1234123412341234', result: 'success')
+      Invoice.last.transactions.create!(credit_card_number: '1234123412341234', result: 'failed')
+
+      get :revenue, id: merchant.id, format: :json
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(1)
+
+      Invoice.last.transactions.create!(credit_card_number: '1234123412341234', result: 'success')
+
+      get :revenue, id: merchant.id, format: :json
+
+      expect(JSON.parse(response.body)['scope'].size).to eq(2)
     end
   end
 end
