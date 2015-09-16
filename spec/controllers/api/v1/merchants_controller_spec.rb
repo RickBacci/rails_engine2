@@ -91,4 +91,19 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe "#invoices" do
+    let(:merchant) { Merchant.create!(name: 'acme') }
+
+    it 'returns all of the merchants invoices' do
+      2.times do |x|
+        merchant.invoices << Invoice.new(status: 'shipped')
+      end
+
+      get :invoices, id: merchant.id, format: :json
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(2)
+    end
+  end
 end
