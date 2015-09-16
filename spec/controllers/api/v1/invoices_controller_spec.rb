@@ -76,18 +76,32 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
   end
 
   describe "#transactions" do
-    it 'returns all transactions for an invoice' do
+    it "returns all transactions for an invoice" do
       invoice = Invoice.create!(status: 'shipped')
 
       2.times do |x|
         invoice.transactions.create(credit_card_number: "12341234#{x}")
       end
 
-      get :transactions, format: :json, id: invoice.id
-
+      get :transactions, id: invoice.id, format: :json
 
       expect(response).to have_http_status(:success)
-      # expect(invoice.transactions.size).to eq(2)
+      expect(invoice.transactions.size).to eq(2)
+    end
+  end
+
+  describe "#invoice_items" do
+    it 'returns all invoice_items for an invoice' do
+      invoice = Invoice.create!(status: 'shipped')
+
+      2.times do |x|
+        invoice.invoice_items.create(quantity: "#{x}", unit_price: "1.00")
+      end
+
+      get :invoice_items, id: invoice.id, format: :json
+
+      expect(response).to have_http_status(:success)
+      expect(invoice.invoice_items.size).to eq(2)
     end
   end
 end
