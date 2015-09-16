@@ -21,6 +21,7 @@ group :test do
   gem 'cucumber-rails', :require => false
   gem 'cucumber-api-steps', :require => false
   gem 'json_spec'
+  gem 'simplecov', :require => false
 end
 
 group :development do
