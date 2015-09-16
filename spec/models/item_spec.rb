@@ -15,11 +15,8 @@ RSpec.describe Item, type: :model do
 
     expect(item.invoice_items.size).to eq(2)
   end
-<<<<<<< HEAD
 
   it 'has a merchant' do
     expect(item.merchant.name).to eq('acme')
   end
-=======
->>>>>>> 0c3fc6bcacdd2484e10e3ea86e9bc8fa38d17977
 end
