@@ -20,4 +20,8 @@ class Merchant < ActiveRecord::Base
   def self.most_revenue(limit)
     all.sort { |merchant1, merchant2| merchant2.revenue <=> merchant1.revenue }.take(limit.to_i)
   end
+
+  def self.date_revenue(date)
+    Invoice.revenue_by_date(date).joins(:invoice_items).sum("unit_price * quantity")
+  end
 end

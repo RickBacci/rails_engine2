@@ -10,4 +10,8 @@ class Invoice < ActiveRecord::Base
   def self.successful
     joins(:transactions).where("result = 'success'")
   end
+
+  def self.revenue_by_date(date)
+    successful.where(created_at: date)
+  end
 end

@@ -41,6 +41,10 @@ class Api::V1::MerchantsController < ApplicationController
     respond_with ( Merchant.most_revenue(params[:quantity]))
   end
 
+  def date_revenue
+    respond_with ({ total_revenue: Merchant.date_revenue(params[:date]) } )
+  end
+
   private
 
   def find_params
