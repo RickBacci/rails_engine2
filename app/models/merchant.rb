@@ -16,4 +16,8 @@ class Merchant < ActiveRecord::Base
   def successful_invoices
     invoices.successful
   end
+
+  def self.most_revenue(limit)
+    all.sort { |merchant1, merchant2| merchant2.revenue <=> merchant1.revenue }.take(limit.to_i)
+  end
 end

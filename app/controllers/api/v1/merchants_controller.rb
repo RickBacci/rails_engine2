@@ -22,7 +22,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def items
-   respond_with Merchant.find(params[:id]).items
+    respond_with Merchant.find(params[:id]).items
   end
 
   def invoices
@@ -35,6 +35,10 @@ class Api::V1::MerchantsController < ApplicationController
     else
       respond_with ({ revenue: Merchant.find(params[:id]).revenue })
     end
+  end
+
+  def most_revenue
+    respond_with ( Merchant.most_revenue(params[:quantity]))
   end
 
   private
