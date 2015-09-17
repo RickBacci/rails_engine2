@@ -5,11 +5,15 @@ class Merchant < ActiveRecord::Base
   has_many :transactions, through: :invoices
 
 
-  def revenue
-    invoices.successful.joins(:invoice_items).sum("unit_price * quantity")
+  def revenue(date='')
+    if date == ''
+      invoices.successful.joins(:invoice_items).sum("unit_price * quantity")
+    else
+      invoices.successful.where(created_at: date).joins(:invoice_items).sum("unit_price * quantity")
+    end
   end
 
   def successful_invoices
-    invoices.where { |invoice| invoice.transactions.select { |transaction| transaction.result == 'success' }}.flatten
+    invoices.successful
   end
 end
