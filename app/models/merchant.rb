@@ -13,22 +13,34 @@ class Merchant < ActiveRecord::Base
     end
   end
 
-  def successful_invoices
-    invoices.successful
-  end
-
   def self.most_revenue(limit)
     all.sort { |merchant1, merchant2| merchant2.revenue <=> merchant1.revenue }.take(limit.to_i)
   end
 
   def self.date_revenue(date)
     Invoice.revenue_by_date(date).joins(:invoice_items).sum("unit_price * quantity")
+  end
+
+  def self.total_revenue_by_date(date)
+    Invoice.successful.where(created_at: date).joins(:invoice_items).sum("unit_price * quantity")
+  end
+
   def total_items
     invoices.successful.joins(:invoice_items).sum("quantity")
   end
 
   def self.most_items(quantity)
     all.sort { |merchant1, merchant2| merchant2.total_items <=> merchant1.total_items }.take(quantity.to_i)
+  end
+
+  def pending_invoices
+    invoices.pending.uniq
+  end
+
+  def favorite_customer
+    hash = Hash.new(0)
+    customers.map { |x| hash[x] += 1 }
+    hash.max
   end
 end
 

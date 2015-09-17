@@ -14,4 +14,8 @@ class Invoice < ActiveRecord::Base
   def self.revenue_by_date(date)
     successful.where(created_at: date)
   end
+
+  def self.pending
+    joins(:transactions).where("result = 'failed'")
+  end
 end

@@ -42,11 +42,19 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def date_revenue
-    respond_with ({ total_revenue: Merchant.date_revenue(params[:date]) } )
     respond_with ({ total_revenue: Merchant.total_revenue_by_date(params[:date]) } )
   end
+
+  def favorite_customer
+    respond_with Merchant.find(params[:id]).favorite_customer
+  end
+
   def most_items
     respond_with ( Merchant.most_items(params[:quantity]))
+  end
+
+  def pending_invoices
+    respond_with Merchant.find(params[:id]).pending_invoices
   end
 
   private
