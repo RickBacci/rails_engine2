@@ -23,5 +23,12 @@ class Merchant < ActiveRecord::Base
 
   def self.date_revenue(date)
     Invoice.revenue_by_date(date).joins(:invoice_items).sum("unit_price * quantity")
+  def total_items
+    invoices.successful.joins(:invoice_items).sum("quantity")
+  end
+
+  def self.most_items(quantity)
+    all.sort { |merchant1, merchant2| merchant2.total_items <=> merchant1.total_items }.take(quantity.to_i)
   end
 end
+
