@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get '/merchants/:id/revenue',      to: 'merchants#revenue'
       get '/merchants/most_revenue',     to: 'merchants#most_revenue'
       get '/merchants/revenue',          to: 'merchants#date_revenue'
+      get '/merchants/:id/favorite_customer', to: 'merchants#favorite_customer'
       get '/merchants/most_items',       to: 'merchants#most_items'
       get '/merchants/:id/customers_with_pending_invoices', to: 'merchants#pending_invoices'
 
