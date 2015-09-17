@@ -36,11 +36,5 @@ class Merchant < ActiveRecord::Base
   def pending_invoices
     invoices.pending.uniq
   end
-
-  def favorite_customer
-    hash = Hash.new(0)
-    customers.map { |x| hash[x] += 1 }
-    hash.max
-  end
 end
 
